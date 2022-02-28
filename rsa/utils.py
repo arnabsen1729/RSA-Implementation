@@ -1,6 +1,5 @@
 import random
 import math
-import sys
 
 
 def egcd(a: int,  b: int) -> tuple[int, int, int]:
@@ -11,7 +10,8 @@ def egcd(a: int,  b: int) -> tuple[int, int, int]:
         b (int): integer
 
     Returns:
-        tuple[int, int, int]: (gcd, x, y) where gcd = gcd(a, b), x = a * y + b * x, y = b * y - a * x
+        tuple[int, int, int]: (gcd, x, y) where gcd = gcd(a, b),
+        x = a * y + b * x, y = b * y - a * x
     """
     if a == 0:
         return (b, 0, 1)
@@ -48,7 +48,8 @@ def generate_keys(p: int, q: int) -> tuple[int, int, int]:
         q (int): prime number 2
 
     Returns:
-        tuple[int, int, int]: (e, d, n) where e = public key, d = private key, n = pq
+        tuple[int, int, int]: (e, d, n)
+        where e = public key, d = private key, n = pq
     """
     n = p * q
     phi = (p - 1) * (q - 1)
@@ -99,10 +100,7 @@ def rabin_miller(n: int) -> bool:
     k = 0
     while k < 128:
         a = random.randrange(2, n-1)
-        # a^s is computationally infeasible.  we need a more intelligent approach
-        #v = (a**s)%n
-        # python's core math module can do modular exponentiation
-        v = pow(a, s, n)  # where values are (num,exp,mod)
+        v = pow(a, s, n)
         if v != 1:
             i = 0
             while v != (n-1):
@@ -118,9 +116,10 @@ def rabin_miller(n: int) -> bool:
 def is_prime(n: int) -> bool:
     """Standard Prime Check
 
-    lowPrimes is all primes (sans 2, which is covered by the bitwise and operator)
-    under 1000. taking n modulo each lowPrime allows us to remove a huge chunk
-    of composite numbers from our potential pool without resorting to Rabin-Miller
+    lowPrimes is all primes (sans 2, which is covered by the bitwise and
+    operator) under 1000. taking n modulo each lowPrime allows us to remove a
+    huge chunk of composite numbers from our potential pool without resorting to
+    Rabin-Miller
 
     Args:
         n (int): integer
@@ -161,6 +160,6 @@ def generate_large_prime(k: int) -> int:
         # unusable for serious crypto purposes
         n = random.randrange(2**(k-1), 2**(k))
         r -= 1
-        if is_prime(n) == True:
+        if is_prime(n):
             return n
-    raise Exception(f"Failure after {r} tries.")
+    raise Exception(f"Failure after {r_} tries.")
